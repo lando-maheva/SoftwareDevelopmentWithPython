@@ -1,14 +1,14 @@
 import random
 
 
-### Defining a class Course to represent a single course and the mark obtained
+### defining a class Course to represent a single course and the mark obtained
 class Course:
     def __init__(self, course_name, mark):
         self.course_name = course_name
         self.mark = mark
 
 
-### Defining a class to represent a Student
+### defining a class to represent a Student
 class Student:
     def __init__(self, student_id, name, age, gender, department):
         self.student_id = student_id
@@ -34,7 +34,7 @@ class Student:
         return self.average_mark
 
 
-### Generating sample data
+### generating sample data
 def generate_students():
     first_names = ["John", "Mary", "Maheva", "Maeva", "Annabelle", "Patience", "Angel", "Lincia", "David"]
     last_names = ["Smith", "Doe", "Brown", "Wilson", "Taylor", "Anderson", "Thomas", "Jackson", "White"]
@@ -43,7 +43,7 @@ def generate_students():
 
     students = []
     for i in range(10):
-        # 1. Create student instance
+        # create student instance
         student = Student(
             student_id=101 + i,
             name=f"{random.choice(first_names)} {random.choice(last_names)}",
@@ -52,12 +52,12 @@ def generate_students():
             department=random.choice(departments)
         )
 
-        # 2. Add 10 courses with random marks
+        # add 10 courses with random marks
         for c_name in course_list:
             mark = random.randint(40, 100)
             student.add_course(Course(c_name, mark))
 
-        # 3. Finalize student data
+        # finalize student data
         student.calculate_average_mark()
         students.append(student)
 
@@ -65,7 +65,7 @@ def generate_students():
 
 
 def rank_students(student_list):
-    # Sort by average mark descending
+    # sort by average mark descending
     sorted_students = sorted(student_list, key=lambda s: s.average_mark, reverse=True)
     for i, student in enumerate(sorted_students):
         student.rank = i + 1
@@ -92,17 +92,17 @@ def display_class_statistics(student_list):
     if not student_list:
         return
 
-    # 1. Calculations
+    # calculations
     averages = [s.average_mark for s in student_list]
     highest_avg = max(averages)
     lowest_avg = min(averages)
     class_avg = sum(averages) / len(student_list)
 
-    # Assuming pass mark is 50
+    # assuming pass mark is 50
     passed = [s for s in student_list if s.average_mark >= 50]
     failed = [s for s in student_list if s.average_mark < 50]
 
-    # Determine Class Remark
+    # determine Class Remark
     if class_avg >= 70:
         remark = "Excellent Performance"
     elif class_avg >= 50:
@@ -110,7 +110,7 @@ def display_class_statistics(student_list):
     else:
         remark = "Needs Improvement"
 
-    # 2. Display the Statistics Table
+    # display the Statistics Table
     print("\n" + "-" * 40)
     print("       CLASS SUMMARY STATISTICS")
     print("-" * 40)
@@ -129,22 +129,22 @@ def display_class_statistics(student_list):
 def add_new_student(student_list):
     print("\n--- Add New Student ---")
     try:
-        # Generate a new ID based on the last student's ID + 1
+        #generate a new ID based on the last student's ID + 1
         new_id = student_list[-1].student_id + 1 if student_list else 101
         name = input("Enter Student Name: ")
         age = int(input("Enter Age: "))
         gender = input("Enter Gender (Male/Female): ")
         dept = input("Enter Department: ")
 
-        # Create the instance
+        # create the instance
         new_student = Student(new_id, name, age, gender, dept)
 
-        # Add some default courses so they have an average (Optional)
-        # Or leave it empty for the user to add later
+        # add some default courses so they have an average (Optional)
+        # or leave it empty for the user to add later
         student_list.append(new_student)
         print(f"Successfully added {name}!")
 
-        # Re-rank after adding
+        # re-rank after adding
         return rank_students(student_list)
     except ValueError:
         print("Invalid input. Age must be a number.")
@@ -155,7 +155,7 @@ def delete_student(student_list):
     print("\n--- Delete Student ---")
     try:
         sid = int(input("Enter the Student ID to remove: "))
-        # Find the student
+        # find the student
         to_remove = None
         for s in student_list:
             if s.student_id == sid:
@@ -168,7 +168,7 @@ def delete_student(student_list):
         else:
             print("Student ID not found.")
 
-        # Re-rank after deleting to fix the ranking order
+        # re-rank after deleting to fix the ranking order
         return rank_students(student_list)
     except ValueError:
         print("Invalid ID format.")
@@ -177,7 +177,7 @@ def delete_student(student_list):
 def main():
     print("--- Welcome to the Student Performance System ---")
 
-    # Generate and rank
+    # generate and rank
     unsorted_students = generate_students()
     ranked_students = rank_students(unsorted_students)
 
@@ -197,7 +197,7 @@ def main():
             break
         else:
             print("Invalid selection.")
-        # ... previous setup ...
+
         all_students = generate_students()
         all_students = rank_students(all_students)
 
@@ -205,8 +205,8 @@ def main():
             print("\nMenu:")
             print("1) Display Statistics")
             print("2) Display by Rank")
-            print("3) Add Student")  # New Option
-            print("4) Delete Student")  # New Option
+            print("3) Add Student")
+            print("4) Delete Student")
             print("5) Exit")
 
             choice = input("Choice: ")
@@ -215,7 +215,7 @@ def main():
                 display_data(all_students, "Class Data")
                 display_class_statistics(all_students)
             elif choice == '2':
-                # We sort it temporarily for display
+
                 sorted_list = sorted(all_students, key=lambda s: s.rank)
                 display_data(sorted_list, "Ranked List")
             elif choice == '3':
